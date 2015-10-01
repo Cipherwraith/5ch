@@ -1,0 +1,11 @@
+{
+  "name": "2ch-js-grunt-deps",
+  "description": "2ch Frontend JavaScript Grunt Dependencies",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "grunt-contrib-concat" : "*",
+    "grunt-contrib-uglify" : "*",
+    "grunt-merge-json": "*"
+  }
+}
