@@ -13,12 +13,12 @@ the \*nix config file convention of using `*.d` folders, this should be
 intuitive to you. 
 
 If `js/` contains:
-	* 00-jquery.js
-	* 00-gettext.js
-	* 01-jquery-ui.js 
-	* 02-options.js
-	* 03-backlinks.js
-	* 03-oekaki.js
+* 00-jquery.js
+* 00-gettext.js
+* 01-jquery-ui.js 
+* 02-options.js
+* 03-backlinks.js
+* 03-oekaki.js
 
 The scripts with larger numbers are appended after the scripts with smaller
 numbers. Scripts with the same number can be appended in any order. In the
@@ -63,6 +63,6 @@ then you should provide a translation file.
 
 ## Build Requirements
 
-	1. grunt
-	2. npm
-	3. git (for submodules, maybe some day)
+1. grunt
+2. npm
+3. git (for submodules, maybe some day)
