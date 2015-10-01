@@ -6,6 +6,7 @@
   "dependencies": {
     "grunt-contrib-concat" : "*",
     "grunt-contrib-uglify" : "*",
-    "grunt-merge-json": "*"
+    "grunt-merge-json": "*",
+    "glob": "*"
   }
 }

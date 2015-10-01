@@ -66,3 +66,26 @@ then you should provide a translation file.
 1. grunt
 2. npm
 3. git (for submodules, maybe some day)
+
+## Build Instructions
+
+1. Make the grunt command available on your system. `npm install -g grunt; npm
+   install -g grunt-cli`
+2. Install the required `grunt` modules for this project: `npm install`
+3. Build the example: `grunt --env=grunt-build-test --ja`
+4. Paste the code into your browser. `cat main.min.js | xsel` (if you are
+   unfortunate enough to use Windows, You have to open the file in some text
+editor, Ctrl+A, Ctrl+C. On systems without Xorg like MacOS trade `xsel` for
+`pbcopy`)
+5. You should see the following output:
+```
+Hello!
+さようなら!
+```
+6. Try skipping the locale generation by ommitting `--ja`, type `l10n =
+   undefined;`, hit return and do (5) again. You should now see:
+```
+Hello!
+Goodbye!
+```
+7. You could build production, if there was anything there yet. More to come...
