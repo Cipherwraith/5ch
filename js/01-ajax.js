@@ -6,14 +6,7 @@ $('document').ready(function () {
 	    var formData = $('form').serialize()+"&submit=%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%82%80";
 	    e.preventDefault();
 	    var updateProgress = function(e) {
-				var percentage;
-				if (e.loaded === undefined) { // Firefox
-					percentage = Math.round(e.loaded * 100 / e.total);
-				} else { // Chrome?
-					percentage = Math.round(e.loaded * 100 / e.total);
-				}
-				// This loading is not working very well yet
-				// $('form').find('input[type="submit"]').val('Posting... (#%)').replace('#', percentage);
+				// Percentage loading will be added here soon
 				$('form').find('input[type="submit"]').val('Posting...');
 			};
 	    $.ajax({
@@ -32,7 +25,7 @@ $('document').ready(function () {
 	      success: function (cc) {
 					// Reload the body after 3sec (there is 5sec waiting thing on bbscgi, I tried reloading 3sec)
 					setTimeout(function() {
-						$('body').load(window.location.href);
+						location.reload();
 					}, 3000);
 	      }
 	    });
