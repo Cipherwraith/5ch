@@ -1,10 +1,14 @@
+/*
+ * 01-ajax.js - Submit post over ajax
+ *  
+ * Copyright (c) 2015 Lance Link <lance@bytesec.org>
+ */
 $('document').ready(function () {
 	$(function() {
 	  $('form').on('submit', function (e) {
 	    var $form = $(e.target);
 	    var submit_txt = $(this).find('input[type="submit"]').val();
-	    // A bit hacky since I hard coded the submit value in that format (that value is hardcoded in bbscgi script)
-	    var formData = $('form').serialize()+"&submit=%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%82%80";
+	    var formData = $('form').serialize();
 	    e.preventDefault();
 	    $.ajax({
 	      url: $form.attr('action'),
@@ -13,20 +17,19 @@ $('document').ready(function () {
 	      contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 	      data: formData,
 	      success: function (cc) {
-					// Reload the body after 3sec (there is 5sec waiting thing on bbscgi, I tried reloading 3sec)
-					setTimeout(function() {
-						$('form').find('input[type="submit"]').val('Posted');
-						location.reload();
-					}, 3000);
+					$(document).trigger('new_post', this);
+	      	$('form input[type="text"]').val('');
+	      	$('form textarea').val('');
+					$('form').find('input[type="submit"]').val(_('Posted'));
+					$('form').find('input[type="submit"]').attr('disabled', false);
 	      },
 	      error: function(xhr, status, er) {
-					console.log(xhr);
-					alert("Error, please check post and try again");
-					$('form').find('input[type="submit"]').val(submit_txt);
+					alert(_("Error, please check post and try again"));
+					$('form').find('input[type="submit"]').val(_(submit_txt));
 					$('form').find('input[type="submit"]').removeAttr('disabled');
 				}
 	    });
-	    $('form').find('input[type="submit"]').val('Posting...');
+	    $('form').find('input[type="submit"]').val(_('Posting...'));
 	    $('form').find('input[type="submit"]').attr('disabled', true);
 	  });
 	});
