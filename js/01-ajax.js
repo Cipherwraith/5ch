@@ -17,17 +17,17 @@ $('document').ready(function () {
 	      contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 	      data: formData,
 	      success: function (cc) {
-					$(document).trigger('new_post', this);
+		$(document).trigger('new_post', this);
 	      	$('form input[type="text"]').val('');
 	      	$('form textarea').val('');
-					$('form').find('input[type="submit"]').val(_('Posted'));
-					$('form').find('input[type="submit"]').attr('disabled', false);
+		$('form').find('input[type="submit"]').val(_(submit_txt));
+		$('form').find('input[type="submit"]').attr('disabled', false);
 	      },
 	      error: function(xhr, status, er) {
-					alert(_("Error, please check post and try again"));
-					$('form').find('input[type="submit"]').val(_(submit_txt));
-					$('form').find('input[type="submit"]').removeAttr('disabled');
-				}
+		alert(_("Error, please check post and try again"));
+		$('form').find('input[type="submit"]').val(_(submit_txt));
+		$('form').find('input[type="submit"]').removeAttr('disabled');
+	      }
 	    });
 	    $('form').find('input[type="submit"]').val(_('Posting...'));
 	    $('form').find('input[type="submit"]').attr('disabled', true);
