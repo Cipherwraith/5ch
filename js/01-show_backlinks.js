@@ -22,7 +22,7 @@ $('document').ready(function () {
         $('[data-tooltip="' + id + '"]').hover(function(e) {
           if ($('[data-id="' + id + '"]').length==0)
             return true;
-          var onScreen = $('[data-id="' + id + '"]').inView('both');
+          var onScreen = $('[data-id="' + id + '"]').inView();
           if (onScreen) {
             $('[data-id="' + id + '"]').css('background', '#EB9999');
           } else {
@@ -36,7 +36,7 @@ $('document').ready(function () {
         }, function() {
           if ($('[data-id="' + id + '"]').length==0)
             return true;
-          var onScreen = $('[data-id="' + id + '"]').inView('both');
+          var onScreen = $('[data-id="' + id + '"]').inView();
           if (onScreen) {
             $('[data-id="' + id + '"]').css('background', 'none');
           } else {
@@ -54,7 +54,7 @@ $('document').ready(function () {
         var id = $(this).text().substring(2);
         if ($('[data-id="' + id + '"]').length==0)
           return true;
-        var onScreen = $('[data-id="' + id + '"]').inView('both');
+        var onScreen = $('[data-id="' + id + '"]').inView();
         if (onScreen) {
           $('[data-id="' + id + '"]').css('background', '#EB9999');
         } else {
@@ -69,7 +69,7 @@ $('document').ready(function () {
         var id = $(this).text().substring(2);
         if ($('[data-id="' + id + '"]').length==0)
           return true;
-        var onScreen = $('[data-id="' + id + '"]').inView('both');
+        var onScreen = $('[data-id="' + id + '"]').inView();
         if (onScreen) {
           $('[data-id="' + id + '"]').css('background', 'none');
         } else {
@@ -79,23 +79,14 @@ $('document').ready(function () {
     }
   });
   // Check if element is on screen function
-  $.fn.inView = function(inViewType) {
+  $.fn.inView = function() {
     var viewport = {};
     viewport.top = $(window).scrollTop();
     viewport.bottom = viewport.top + $(window).height();
     var bounds = {};
     bounds.top = this.offset().top;
     bounds.bottom = bounds.top + this.outerHeight();
-    switch(inViewType){
-      case 'bottomOnly':
-        return ((bounds.bottom <= viewport.bottom) && (bounds.bottom >= viewport.top));
-      case 'topOnly':
-        return ((bounds.top <= viewport.bottom) && (bounds.top >= viewport.top));
-      case 'both':
-        return ((bounds.top >= viewport.top) && (bounds.bottom <= viewport.bottom));         
-      default:     
-        return ((bounds.top >= viewport.top) && (bounds.bottom <= viewport.bottom));        
-    }
+    return ((bounds.top >= viewport.top) && (bounds.bottom <= viewport.bottom));
   };
   $(document).on('check_reply', function(e, post) {
     check_backlinks(post);
