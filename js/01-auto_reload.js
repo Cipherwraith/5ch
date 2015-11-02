@@ -1,6 +1,5 @@
 /*
  * 01-auto_reload.js - Auto reload thread on {n} time. Can be set in Options.
- *                     (5 seconds default interval, reload algorithm will be optimized soon)
  * 
  * Copyright (c) 2015 Lance Link <lance@bytesec.org>
  */
@@ -20,12 +19,16 @@ $('document').ready(function () {
     });
   };
   $(document).on('new_post', function(e, post) {
-    reload_thread();
+    setTimeout(function(){ reload_thread(); }, 2000); // Delaying to fetch the posted data successfully, (bbs.cgi adjustment would be great C: )
   });
   if (!localStorage.autoUpdate)
     localStorage.autoUpdate = "true";
-  setInterval(function() {
-    if (localStorage.autoUpdate == "true")
-      reload_thread();
-  }, 5000);
+  if (!localStorage.reloadInterval)
+    localStorage.reloadInterval = 5;
+  var reload_interval = function() {
+    clearInterval(interval);
+    reload_thread();
+    interval = setInterval(reload_interval, (localStorage.reloadInterval*1000));
+  }
+  var interval = setInterval(reload_interval, localStorage.reloadInterval);
 });
