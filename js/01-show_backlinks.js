@@ -17,7 +17,8 @@ $('document').ready(function () {
     if (msg_reply) {
       msg_reply.forEach(function(e){
         e = e.trim().replace('>>','');
-        $('[data-id="' + e + '"]').find('.date').append('<span class="back-links"><a data-tooltip="' + id + '" href="' + document.location + "/" + id + '">>>' + id + '</a></span>');
+        if (e == id) return true;
+        $('[data-id="' + e + '"]').find('.date').append('<span class="back-links"><a data-tooltip="' + id + '" href="http://' + window.location.hostname + window.location.pathname + "/" + id + '" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>');
         // Add hover to backlink
         $('[data-tooltip="' + id + '"]').hover(function(e) {
           if ($('[data-id="' + id + '"]').length==0)
@@ -48,10 +49,16 @@ $('document').ready(function () {
   }
   // Loop to add hover to reply link in all messages
   $('.thread').find('.post').find('.message').find('a').each(function() {
+    check_reply_links(this);
+  });
+  function check_reply_links(post) {
     var regExp = /\>\>[1$-9]{1,3}($|\s)/g;
-    if ($(this).text().match(regExp)) {
-      $(this).hover(function(e) {
-        var id = $(this).text().substring(2);
+    if ($(post).text().match(regExp)) {
+      var id = $(post).text().substring(2);
+      $(post).click(function(e) {
+        highlightReply(id, "reply", e);
+      });
+      $(post).hover(function(e) {
         if ($('[data-id="' + id + '"]').length==0)
           return true;
         var onScreen = $('[data-id="' + id + '"]').inView();
@@ -66,7 +73,7 @@ $('document').ready(function () {
           }).stop().show(100);
         }
       }, function() {
-        var id = $(this).text().substring(2);
+        var id = $(post).text().substring(2);
         if ($('[data-id="' + id + '"]').length==0)
           return true;
         var onScreen = $('[data-id="' + id + '"]').inView();
@@ -77,7 +84,7 @@ $('document').ready(function () {
         }
       });
     }
-  });
+  }
   // Check if element is on screen function
   $.fn.inView = function() {
     var viewport = {};
@@ -90,5 +97,20 @@ $('document').ready(function () {
   };
   $(document).on('check_reply', function(e, post) {
     check_backlinks(post);
+    $(post).find('.message').find('a').each(function() {
+      check_reply_links(this);
+    });
   });
 });
+function highlightReply(id, where, event) {
+  if (!localStorage.backlinkOpen)
+    localStorage.backlinkOpen = "true";
+  if (localStorage.backlinkOpen == "false") {
+    // Reposition page view to div id of clicked backlink
+    event.preventDefault();
+    $('#'+where+'-' + id).remove();
+    $("#"+id).get(0).scrollIntoView();
+    $("#"+id).css('background', '#EB9999');
+    $("#"+id).stop(true, true).animate({ backgroundColor: 'transparent' });
+  }
+}
