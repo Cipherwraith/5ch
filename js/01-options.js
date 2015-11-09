@@ -9,18 +9,19 @@ $(document).ready(function() {
 	option_content    += '<div class="option_bg"></div>';
 	option_content 	  += '<div id="optionInsideView" class="option_view">';
 	option_content 	  += '<span><b><a id="close_options" href="javascript:void(0)">X</a></b></span><br><br>';
-	option_content 	  += '<input type="checkbox" name="blink_open" id="bOpen" '+ ((localStorage.backlinkOpen=="true")?'checked':'') +'>' + _("Open backlinks") + '<br><br>';
-	option_content 	  += '<fieldset><legend>' + _("Auto update") + '</legend>';
+	option_content 	  += '<input type="checkbox" name="blink_open" id="bOpen" '+ ((localStorage.backlinkOpen=="true")?'checked':'') +'>' + _("レスへのリンクを新しいページで開く") + '<br><br>';
+	option_content 	  += '<input type="checkbox" name="auto_post" id="aPost" '+ ((localStorage.autoPost=="true")?'checked':'') +'>' + _("新着レス自動表示") + '<br><br>';
+	option_content 	  += '<fieldset><legend>' + _("自動更新") + '</legend>';
 	if (localStorage.autoUpdate == "true") {
-	  option_content  += '<input type="checkbox" name="a_update" id="autoUpdate" checked>' + _("Auto update thread every") + '   ';
-	  option_content  += '<input type="number" id="interValue" maxlength="2" min="0" max="99" style="width: 50px;" value="'+localStorage.reloadInterval+'"> ' + _("second/s");
+	  option_content  += '<input type="checkbox" name="a_update" id="autoUpdate" checked>' + '   ';
+	  option_content  += '<input type="number" id="interValue" maxlength="2" min="0" max="99" style="width: 50px;" value="'+localStorage.reloadInterval+'"> ' + _("秒間隔で自動更新する");
 	} else {
-	  option_content  += '<input type="checkbox" name="a_update" id="autoUpdate">' + _("Auto update thread every") + '   ';
-	  option_content  += '<input type="number" id="interValue" maxlength="2" min="0" max="99" style="width: 50px;" value="'+localStorage.reloadInterval+'" disabled> ' + _("second/s");
+	  option_content  += '<input type="checkbox" name="a_update" id="autoUpdate">' + '   ';
+	  option_content  += '<input type="number" id="interValue" maxlength="2" min="0" max="99" style="width: 50px;" value="'+localStorage.reloadInterval+'" disabled> ' + _("秒間隔で自動更新する");
 	}
 	option_content    += '</fieldset>';
 	option_content    += '</div></div>';
-	$('.topmenu').append('<div class="option_text"><a href="javascript:void(0)" id="options">' + _("[Options]") + '</a></div>');
+	$('.topmenu').append('<div id="options" class="option_text">' + _("[オプション]") + '</div>');
 	$('body').append(option_content);
 	$('#options').on('click', function(e) {
 	  if (open) {
@@ -39,6 +40,14 @@ $(document).ready(function() {
 			localStorage.backlinkOpen = "false";
 		}
 	});
+	$('#aPost').click(function() {
+		var $this = $(this);
+		if ($this.is(':checked')) {
+			localStorage.autoPost = "true";
+		} else {
+			localStorage.autoPost = "false";
+		}
+	});
 	$('#autoUpdate').click(function() {
 	  var $this = $(this);
 	  if ($this.is(':checked')) {
@@ -47,7 +56,7 @@ $(document).ready(function() {
 	  } else {
 	    $('#interValue').attr('disabled', true);
 	    localStorage.autoUpdate = "false";
-    }
+    	  }
 	});
 	$("#interValue").on('keyup keypress blur change', function(e) {
 		if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
@@ -72,6 +81,6 @@ $(document).ready(function() {
 	  if ((!container.is(e.target)) && (container.has(e.target).length == 0) && (!$('#options').is(e.target))) {
 	    $('#optionView').css('display', 'none');
 	    open = false;
-    }
+    	  }
 	});
 });
