@@ -18,7 +18,7 @@ $('document').ready(function () {
       msg_reply.forEach(function(e){
         e = e.trim().replace('>>','');
         if (e == id) return true;
-        $('[data-id="' + e + '"]').find('.date').append('<span class="back-links"><a data-tooltip="' + id + '" href="http://' + window.location.hostname + window.location.pathname + "/" + id + '" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>');
+        $('[data-id="' + e + '"]').find('.date').append('<span class="back-links"><a data-tooltip="'+id+'" href="'+$('#zxcvtypo').val()+"/"+id+'" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>');
         // Add hover to backlink
         $('[data-tooltip="' + id + '"]').hover(function(e) {
           if ($('[data-id="' + id + '"]').length==0)
@@ -106,11 +106,16 @@ function highlightReply(id, where, event) {
   if (!localStorage.backlinkOpen)
     localStorage.backlinkOpen = "true";
   if (localStorage.backlinkOpen == "false") {
-    // Reposition page view to div id of clicked backlink
-    event.preventDefault();
-    $('#'+where+'-' + id).remove();
-    $("#"+id).get(0).scrollIntoView();
-    $("#"+id).css('background', '#EB9999');
-    $("#"+id).stop(true, true).animate({ backgroundColor: 'transparent' });
+    // Reposition page view to div id of clicked backlink if visible
+    if($('#'+id).length != 0) {
+      event.preventDefault();
+      $('#'+where+'-' + id).remove();
+      $("#"+id).get(0).scrollIntoView();
+      $("#"+id).css('background', '#EB9999');
+      $("#"+id).stop(true, true).animate({ backgroundColor: 'transparent' });
+    } else {
+      // Open link if not visible bypassing set option
+      $(this).trigger('click');
+    }
   }
 }
