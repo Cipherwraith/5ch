@@ -4,8 +4,10 @@
  * Copyright (c) 2015 Lance Link <lance@bytesec.org>
  */
 $('document').ready(function () {
-	$(function() {
-	  $('form').on('submit', function (e) {
+  if (!localStorage.autoPost)
+    localStorage.autoPost = "false";
+  $('form').on('submit', function (e) {
+	  if(localStorage.autoPost == "true") {
 	    var $form = $(e.target);
 	    var submit_txt = $(this).find('input[type="submit"]').val();
 	    var formData = $('form').serialize();
@@ -31,6 +33,6 @@ $('document').ready(function () {
 	    });
 	    $('form').find('input[type="submit"]').val(_('Posting...'));
 	    $('form').find('input[type="submit"]').attr('disabled', true);
-	  });
-	});
+	  }
+  });
 });
