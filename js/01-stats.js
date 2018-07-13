@@ -260,7 +260,7 @@ var Stats = {
                   "" :
                   "style=\"width:31%\"" ;
 
-        $('.pagestats').append($('<ul class="menujust"><li '+ col_width +' class="metastats meta centered range" title="'+ this.strings.timeRange +'"></li><li '+ col_width +' class="metastats meta centered ikioi" title="'+ this.strings.currentIkioi +'"></li><li '+ col_width +' class="metastats meta centered ikioi_sl"><span class="ikioi_sl_c"></span><span class="ikioi_info">最小勢い：<span class="min"></span>&#12288;最大勢い：<span class="max"></span></span><span class="stats_help"><a href="javascript:void(0)">(?)</a></span></li></ul>'));
+        $('.pagestats').append($('<ul class="menujust"><li '+ col_width +' class="metastats meta centered range" title="'+ this.strings.timeRange +'"></li><li '+ col_width +' class="metastats meta centered ikioi" title="'+ this.strings.currentIkioi +'"></li><li '+ col_width +' class="metastats meta centered ikioi_sl"><span class="ikioi_sl_c"></span><span class="ikioi_info">最小勢い：<span class="min"></span>&#12288;最大勢い：<span class="max"></span></span><span class="stats_help"><a href="http://info.5ch.net/index.php/%E7%B5%B1%E8%A8%88%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88" target="_blank">(?)</a></span></li></ul>'));
         this.drawGraph();
         this.initGraphListeners();
         this.updateElements();
