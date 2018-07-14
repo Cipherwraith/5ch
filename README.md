@@ -1,10 +1,10 @@
-# 2ch JavaScript
+# 5ch JavaScript
 
 ## Synopsis
 
 This repository contains the public JavaScript programs for the new version of
-2ch's read.cgi. The purpose of these scripts is to increase quality of life for
-2ch users on 2ch.net web interface.
+5ch's read.cgi. The purpose of these scripts is to increase quality of life for
+5ch users on 5ch.net web interface.
 
 The build process is based off of the 8chan JavaScript build process, but
 several things have been based on what I've learned from maintaining 8chan's
@@ -25,7 +25,7 @@ numbers. Scripts with the same number can be appended in any order. In the
 above example, gettext does not depend on jquery, jquery-ui depends on jquery
 and (perhaps) gettext, options depends on jquery-ui and jquery, and
 backlinks/oekaki depend on everything. Generally, global libraries should be
-`00` (or `01` if they are jQuery libraries), local APIs just for the 2ch
+`00` (or `01` if they are jQuery libraries), local APIs just for the 5ch
 frontend script should be `02`, and all features should be `03` and so on.
 Further levels can be added, but beyond `03` you must ask yourself: *why am I
 depending on X script being loaded for my script? Is there a way around it?* If
@@ -36,7 +36,7 @@ Translations must be JSON files in the `locale` folder. If the script is
 `03-oekaki.js`, the JSON file must be `03-oekaki.ja_JP.json`. The keys in the
 JSON file are English strings, and the values are Japanese translations.
 
-To allows many authors to contribute to 2ch's frontend, we also impose the
+To allows many authors to contribute to 5ch's frontend, we also impose the
 following rules on script acceptance:
 
 * Accepted scripts must not add user-facing options through any method other
