@@ -4,9 +4,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "grunt-contrib-concat" : "*",
-    "grunt-contrib-uglify" : "*",
-    "grunt-merge-json": "*",
-    "glob": "*"
+    "glob": "^7.1.2",
+    "grunt": "^1.0.3",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-merge-json": "^0.9.7"
   }
 }

@@ -44,17 +44,21 @@ module.exports = function(grunt) {
       my_target: {
         files: {
           'locale/ja_JP.json': ['locale/locale_header', 'locale/ja_JP.json'],
-          'main.js': concat_targets
+          'main.js': concat_targets,
+          'stats-only-dbg.js': ['js/00-sparkline.js', 'js/00-threadinfo.js', 'js/01-stats.js']
         }
       }
     },
     uglify: {
       my_target: {
-        options: { /* Very important for Shift-JIS support! */ 
-          ASCIIOnly: true
+        options: { 
+          mangle: { properties: true },
+          /* Very important for Shift-JIS support! */ 
+          output: { ascii_only: true }
         },
         files: {
-          'main.min.js': ['main.js']
+          'main.min.js': ['main.js'],
+          'stats-only-dbg.min.js': ['stats-only-dbg.js']
         }
       }
     }
