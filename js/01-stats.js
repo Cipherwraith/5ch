@@ -278,6 +278,6 @@ var Stats = {
 	}
 }
 
-$(document).on('ready', function() {
+$('document').ready(function() {
     Stats.init();
 })
