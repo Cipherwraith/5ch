@@ -1,9 +1,17 @@
 /*
- * 01-auto_reload.js - Auto reload thread on ajax post
+ * 01-auto_reload.js - Auto reload thread on {n} time. Can be set in Options.
+ *                     Auto reload interval grow
  * 
  * Copyright (c) 2015 Lance Link <lance@bytesec.org>
  */
 $('document').ready(function () {
+  if (!localStorage.autoUpdate)
+    localStorage.autoUpdate = "false"; // Auto reload turned off by default
+  if (!localStorage.reloadInterval)
+    localStorage.reloadInterval = 5;
+  localStorage.reloadInterval = 5; // Always set reload interval to 5 even on refresh
+  var first_newpost_id = 0;
+  var new_post_ctr = 0;
   function reload_thread() {
     $.ajax({
       url: document.location,
@@ -22,7 +30,20 @@ $('document').ready(function () {
             if (first_newpost_id == 0)
               first_newpost_id = id;
             $(document).trigger('check_reply', this);
+            $(document).trigger('mobile_view', this);
             $(document).trigger('check_tree_view', this);
+            if (localStorage.autoUpdate == "true")
+              localStorage.reloadInterval = 5;
+          } else {
+            if (localStorage.autoUpdate == "true") {
+              if(index == c_length) {
+                if(localStorage.reloadInterval < 60) {
+                  localStorage.reloadInterval = (localStorage.reloadInterval*2);
+                } else {
+                  localStorage.reloadInterval = 60;
+                }
+              }
+            }
           }
         });
         if (new_post_ctr > 0)
@@ -40,6 +61,13 @@ $('document').ready(function () {
   $(document).on('new_post', function(e, post) {
     setTimeout(function(){ reload_thread(); }, 2000); // Delaying to fetch the posted data successfully, (bbs.cgi adjustment would be great C: )
   });
+  var reload_interval = function() {
+    clearInterval(interval);
+    if (localStorage.autoUpdate == "true")
+      reload_thread();
+    interval = setInterval(reload_interval, (localStorage.reloadInterval*1000));
+  }
+  var interval = setInterval(reload_interval, localStorage.reloadInterval);
 });
 function s_view(first_newpost_id) {
   $("#"+first_newpost_id).get(0).scrollIntoView();
