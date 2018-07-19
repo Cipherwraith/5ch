@@ -11,7 +11,7 @@ $('document').ready(function () {
   	var regExp = /\>\>[1$-9]{1,3}($|\s)/g;
     if ($(this).text().match(regExp)) {
     	var reply_id = $(this).text().substring(2);
-    	var post_number = $(this).parent().parent().attr('id')
+    	var post_number = $(this).parent().parent().parent().attr('id');
     	if (tree[reply_id]) {
     		if (tree[reply_id].indexOf("|"+post_number+"|") < 0) {
     			tree[reply_id] = tree[reply_id]+post_number+"|";
@@ -26,9 +26,11 @@ $('document').ready(function () {
 	  	var tmp = tree[i].split("|");
 	  	for (var j=1; j < tmp.length-1; j++) {
 	  		var r_content = $('[data-id="'+tmp[j]+'"]').html();
-	  		$('[data-id="' + i + '"]').append('<div class="treeView tv-'+tmp[j]+'" style="display:none;padding-left:50px;background-color:#d9d9d9;"><div style="border-left: 1px solid #aaa;">'+r_content+'</div></div>');
+	  		$('[data-id="' + i + '"]').append('<div class="treeView tv-'+tmp[j]+' asetting_4"><div class="asetting_5">'+r_content+'</div></div>');
 	  		if($('.tv-'+i).length > 0) {
-	  			$('.tv-'+i).append('<div class="treeView tv-'+tmp[j]+'" style="display:none;padding-left:50px;background-color:#d9d9d9;"><div style="border-left: 1px solid #aaa;">'+r_content+'</div></div>');
+          if($('.tv-'+i).parent().find('.tv-'+tmp[j]).length <= 0) { // anti unlimited recursion
+	  			  $('.tv-'+i).append('<div class="treeView tv-'+tmp[j]+' asetting_4"><div class="asetting_5">'+r_content+'</div></div>');
+					}
 	  		}
 	  	}
   	}
@@ -36,6 +38,8 @@ $('document').ready(function () {
   if (localStorage.treeView == "true") {
   	$('.treeView').css({'display':'block'});
   }
+
+  // this block is trigger for treeview on new post picked up from auto_reload
   $(document).on('check_tree_view', function(e, post) {
   	var id = $(post).data('id');
     var regExp = /\>\>[1$-9]{1,3}($|\s)/g;
@@ -50,11 +54,15 @@ $('document').ready(function () {
           $(content).find('.back-links').find('.hoverAppend').remove();
           content = content.html();
           if (localStorage.treeView == "true") {
-          	$('[data-id="' + rid + '"]').append('<div class="treeView tv-'+id+'" style="display:block;padding-left:50px;background-color:#d9d9d9;"><div style="border-left: 1px solid #aaa;">'+content+'</div></div>');
-			  		$('.tv-'+rid).append('<div class="treeView tv-'+id+'" style="display:block;padding-left:50px;background-color:#d9d9d9;"><div style="border-left: 1px solid #aaa;">'+content+'</div></div>');
+          	$('[data-id="' + rid + '"]').append('<div class="treeView tv-'+id+' asetting_6"><div class="asetting_5">'+content+'</div></div>');
+						if($('.tv-'+rid).parent().find('.tv-'+id).length <= 0) { // anti unlimited recursion
+			  		  $('.tv-'+rid).append('<div class="treeView tv-'+id+' asetting_6"><div class="asetting_5">'+content+'</div></div>');
+						}
 		  		} else {
-		  			$('[data-id="' + rid + '"]').append('<div class="treeView tv-'+id+'" style="display:none;padding-left:50px;background-color:#d9d9d9;"><div style="border-left: 1px solid #aaa;">'+content+'</div></div>');
-		  			$('.tv-'+rid).append('<div class="treeView tv-'+id+'" style="display:none;padding-left:50px;background-color:#d9d9d9;"><div style="border-left: 1px solid #aaa;">'+content+'</div></div>');
+		  			$('[data-id="' + rid + '"]').append('<div class="treeView tv-'+id+' asetting_4"><div class="asetting_5">'+content+'</div></div>');
+						if($('.tv-'+rid).parent().find('.tv-'+id).length <= 0) { // anti unlimited recursion
+		  			  $('.tv-'+rid).append('<div class="treeView tv-'+id+' asetting_4"><div class="asetting_5">'+content+'</div></div>');
+						}
 		  		}
 		  	}
       }

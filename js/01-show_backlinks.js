@@ -1,5 +1,5 @@
 /*
- * 01-show_backlinks.js - Show reply links beside posts header.
+ * 01-show_backlinks.js - Show reply links beside posts' (with replies) header.
  * 
  * Copyright (c) 2015 Lance Link <lance@bytesec.org>
  */
@@ -24,9 +24,9 @@ $('document').ready(function () {
         e = msg_reply[ii].trim().replace('>>','');
         if (e == id) return true;
         if (mobile == "true") {
-          $('[data-id="' + e + '"]').find('.date').parent().append('<span class="back-links"><a style="font-size:0.625em;" target="_blank" data-tooltip="'+id+'" href="'+$('#zxcvtypo').val()+"/"+id+'" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>');
+          $('[data-id="' + e + '"]').find('.date').parent().append('<span class="back-links"><a class="asetting_2" target="_blank" data-tooltip="'+id+'" href="'+$('#zxcvtypo').val()+"/"+id+'" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>');
         } else {
-          $('<span class="back-links"><a style="font-size:0.625em;" target="_blank" data-tooltip="'+id+'" href="'+$('#zxcvtypo').val()+"/"+id+'" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>').insertBefore($('[data-id="' + e + '"]').find('.message'));
+					$('[data-id="' + e + '"]').find('.meta').append('<span class="back-links"><a style="font-size:0.7em;margin-left: 5px;" target="_blank" data-tooltip="'+id+'" href="'+$('#zxcvtypo').val()+"/"+id+'" onclick="highlightReply('+id+', \'hover\', event);">>>' + id + '</a></span>');
         }
       }
     }

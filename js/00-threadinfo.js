@@ -1,5 +1,5 @@
 /* 
- * 00-threadinfo.js - Creates an object which contains basic necessary information about a 2ch thread
+ * 00-threadinfo.js - Creates an object which contains basic necessary information about a 5ch thread
  * 
  * Author: Fredrick Brennan <copypaste@kittens.ph>
  */

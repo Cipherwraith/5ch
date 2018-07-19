@@ -6,8 +6,9 @@
 $('document').ready(function () {
 	if (!localStorage.autoPost)
     localStorage.autoPost = "false";
-  $('body').append('<div id="notific" style="display:none;position:fixed;top:5%;width:100%;z-index:20;font-weight:bold;color:yellow;"><div id="ntxt" style="background-color:#404040;width:18%;margin:0 auto;border-radius:15px;text-align:center;"></div></div>');
-  $('form').on('submit', function (e) {
+  $('body').append('<div id="notific" class="option_noti_1"><div id="ntxt" class="option_noti_2"></div></div>');
+  // $('form').on('submit', function (e) {
+  $('body').on('submit', 'form', function (e) {
 	  if(localStorage.autoPost == "true") {
 	    var $form = $(e.target);
 	    var submit_txt = $(this).find('input[type="submit"]').val();
@@ -35,7 +36,7 @@ $('document').ready(function () {
 					$('form').find('input[type="submit"]').removeAttr('disabled');
 	      }
 	    });
-	    $('form').find('input[type="submit"]').val(_('Posting...'));
+	    $('form').find('input[type="submit"]').val(_('投稿中...'));
 	    $('form').find('input[type="submit"]').attr('disabled', true);
 	  }
   });

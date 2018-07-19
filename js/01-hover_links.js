@@ -18,6 +18,11 @@ $('document').ready(function () {
         });
         function append_with_event() {
           var post_hover   = $('<div id="reply-' + id + '" class=post_hover data-ha="' + id + '">'+div_content+'</div>');
+              post_hover.css('border', '1px solid #333');
+              post_hover.css('position', 'absolute');
+              post_hover.css('background-color', 'rgb(239,239,239)');
+              post_hover.css('display', 'block');
+              post_hover.css('padding', '5px');
           $("body").append(post_hover);
           // Hover position computation (credit: 8chan)
           var previewWidth = post_hover.outerWidth(true);
@@ -49,8 +54,7 @@ $('document').ready(function () {
           // End of hover position computation
           post_hover.css('left', left);
           post_hover.css('top', top);
-          post_hover.css("cursor","pointer");
-          post_hover.css("display","none");
+
           post_hover.fadeIn("fast");
           if(!$('#reply-' + id).hasClass('vis')) {
             $('#reply-' + id).addClass('vis');
@@ -68,8 +72,7 @@ $('document').ready(function () {
             cache: false,
             success: function(rsp) {
               if ($(rsp).find('#'+id).length > 0) {
-                div_content = $(rsp).filter('.thread').html();
-                var content = $(div_content).not('div.treeView').clone();
+								var content = $(rsp).find('#'+id).clone();
                 content     = $('<div></div>').append(content);
                 $(content).find('.message').find('.hoverAppend').remove();
                 $(content).find('.back-links').find('.hoverAppend').remove();
